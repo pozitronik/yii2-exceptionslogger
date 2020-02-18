@@ -43,7 +43,7 @@ Usage
 At first, run a included migration:
 
 ```
-yii migrate/up --migrationPath=@vendor/pozitronik/yii2-yii2-exceptionslogger/src/migrations
+yii migrate/up --migrationPath=vendor/pozitronik/yii2-exceptionslogger/migrations
 ```
 
 This extension provides an SysExceptions::log() static function, that can accept any Throwable interface as first paramter. All exception data will be saved in `sys_exceptions` table (in case of database failure data will be written into `runtime/exception.log` file).
