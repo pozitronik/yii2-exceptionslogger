@@ -1,0 +1,38 @@
+{
+	"name": "pozitronik/yii2-exceptionslogger",
+	"description": "Exception logging for YII2",
+	"type": "yii2-extension",
+	"keywords": [
+		"yii2",
+		"activerecord",
+		"logger",
+		"exceptions"
+	],
+	"license": "GPL-3.0",
+	"authors": [
+		{
+			"name": "Pavel Dubrovsky",
+			"email": "antikillerxxl@gmail.com"
+		}
+	],
+	"repositories": [
+		{
+			"type": "vcs",
+			"url": "https://github.com/pozitronik/yii2-exceptionslogger"
+		},
+		{
+			"type": "vcs",
+			"url": "https://github.com/pozitronik/yii2-helpers"
+		}
+	],
+	"require": {
+		"yiisoft/yii2": "~2.0.0",
+		"php": ">=7.2.0",
+		"pozitronik/yii2-helpers": "*"
+	},
+	"autoload": {
+		"psr-4": {
+			"pozitronik\\sys_exceptions\\": "src"
+		}
+	}
+}
