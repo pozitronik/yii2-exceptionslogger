@@ -27,7 +27,7 @@ php composer.phar require --prefer-dist pozitronik/yii2-exceptionslogger "*"
 or add
 
 ```
-"pozitronik/yii2-exceptionsloggerr": "*"
+"pozitronik/yii2-exceptionslogger": "*"
 ```
 
 to the require section of your `composer.json` file.
