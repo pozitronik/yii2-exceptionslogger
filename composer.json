@@ -15,21 +15,16 @@
 			"email": "antikillerxxl@gmail.com"
 		}
 	],
+	"minimum-stability": "dev",
+	"require": {
+		"pozitronik/yii2-helpers": "dev-master"
+	},
 	"repositories": [
-		{
-			"type": "vcs",
-			"url": "https://github.com/pozitronik/yii2-exceptionslogger"
-		},
 		{
 			"type": "vcs",
 			"url": "https://github.com/pozitronik/yii2-helpers"
 		}
 	],
-	"require": {
-		"yiisoft/yii2": "~2.0.0",
-		"php": ">=7.2.0",
-		"pozitronik/yii2-helpers": "*"
-	},
 	"autoload": {
 		"psr-4": {
 			"pozitronik\\sys_exceptions\\": "src"
