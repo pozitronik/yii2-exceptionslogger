@@ -19,7 +19,6 @@
 	"require": {
 		"pozitronik/yii2-helpers": "dev-master"
 	},
-
 	"autoload": {
 		"psr-4": {
 			"pozitronik\\sys_exceptions\\": "src"
