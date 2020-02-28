@@ -7,27 +7,16 @@ Installation
 
 The preferred way to install this extension is through [composer](http://getcomposer.org/download/).
 
-Add
+Run
 
 ```
-{
-	"type": "vcs",
-	"url": "https://github.com/pozitronik/yii2-exceptionslogger"
-} 
-```
-
-to the repositories section of your `composer.json` file.
-
-Either run
-
-```
-php composer.phar require --prefer-dist pozitronik/yii2-exceptionslogger "*"
+php composer.phar require pozitronik/yii2-exceptionslogger "dev-master"
 ```
 
 or add
 
 ```
-"pozitronik/yii2-exceptionslogger": "*"
+"pozitronik/yii2-exceptionslogger": "dev-master"
 ```
 
 to the require section of your `composer.json` file.
@@ -50,11 +39,12 @@ This extension provides an SysExceptions::log() static function, that can accept
 
 Example of usage
 ----------------
-
+```
 try {
 	$i = $i/0;
 } catch (Throwable $t) {
 	SysExceptions::log($t);//just silently log exception
 	SysExceptions::log(new RuntimeException("Someone tried divide to zero"), false, true);//silently log own exception and mark it as known error
 	SysExceptions::log(new RuntimeException("It prohibited by mathematics"), true);//log own exception and throw it
-	}
+}
+```
