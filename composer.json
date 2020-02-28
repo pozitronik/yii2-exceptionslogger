@@ -1,6 +1,6 @@
 {
 	"name": "pozitronik/yii2-exceptionslogger",
-	"description": "Exception logging for YII2",
+	"description": "Exception logger for YII2",
 	"type": "yii2-extension",
 	"keywords": [
 		"yii2",
@@ -8,7 +8,7 @@
 		"logger",
 		"exceptions"
 	],
-	"license": "GPL-3.0",
+	"license": "GPL-3.0-or-later",
 	"authors": [
 		{
 			"name": "Pavel Dubrovsky",
@@ -19,12 +19,7 @@
 	"require": {
 		"pozitronik/yii2-helpers": "dev-master"
 	},
-	"repositories": [
-		{
-			"type": "vcs",
-			"url": "https://github.com/pozitronik/yii2-helpers"
-		}
-	],
+
 	"autoload": {
 		"psr-4": {
 			"pozitronik\\sys_exceptions\\": "src"
