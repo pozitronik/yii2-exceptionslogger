@@ -35,7 +35,7 @@ class SysExceptions extends ActiveRecord {
 	 */
 	public $db = 'db';
 
-	private const DEFAULT_TABLE_NAME = 'sys_options';
+	private const DEFAULT_TABLE_NAME = 'sys_exceptions';
 
 	/**
 	 * @inheritdoc
