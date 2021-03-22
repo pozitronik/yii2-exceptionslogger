@@ -4,9 +4,9 @@ declare(strict_types = 1);
 use yii\db\Migration;
 
 /**
- * Class m000000_000000_sys_logger
+ * Class m000000_000000_sys_exceptions
  */
-class m000000_000000_sys_logger extends Migration {
+class m000000_000000_sys_exceptions extends Migration {
 	/**
 	 * {@inheritdoc}
 	 */
