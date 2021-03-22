@@ -21,8 +21,8 @@ class m000000_000000_sys_logger extends Migration {
 			'message' => $this->text(),
 			'trace' => $this->text(),
 			'get' => $this->text()->null()->comment('GET'),
-			'post', $this->text()->null()->comment('POST'),
-			'known', $this->boolean()->notNull()->defaultValue(false)->comment('Known error')
+			'post' => $this->text()->null()->comment('POST'),
+			'known' => $this->boolean()->notNull()->defaultValue(false)->comment('Known error')
 		]);
 
 	}
@@ -34,18 +34,4 @@ class m000000_000000_sys_logger extends Migration {
 		$this->dropTable('sys_exceptions');
 	}
 
-	/*
-	// Use up()/down() to run migration code without a transaction.
-	public function up()
-	{
-
-	}
-
-	public function down()
-	{
-		echo "m000000000000_sys_logger cannot be reverted.\n";
-
-		return false;
-	}
-	*/
 }
