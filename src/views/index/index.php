@@ -19,10 +19,6 @@ $this->title = 'Системные сбои';
 	<div class="col-xs-12">
 		<?= GridView::widget([
 			'dataProvider' => $dataProvider,
-			'panel' => ['heading' => $this->title],
-			'toolbar' => [
-				'content' => ($dataProvider->count > 0)?Html::a('Acknowledge all', ['acknowledge'], ['class' => 'btn btn-success']):null
-			],
 			'columns' => [
 				'timestamp',
 				[
@@ -48,10 +44,7 @@ $this->title = 'Системные сбои';
 						}
 					]
 				]
-			],
-			'export' => false,
-			'resizableColumns' => false,
-			'hideResizeMobile' => false,
+			]
 		]) ?>
 	</div>
 </div>
