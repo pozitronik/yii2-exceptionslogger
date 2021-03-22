@@ -119,7 +119,7 @@ class SysExceptions extends ActiveRecord {
 	 * @throws Throwable
 	 */
 	public static function acknowledgeOne(int $id):void {
-		if (null === $model = self::findOne($id)) $model->updateAttributes(['known' => true]);
+		if (null !== $model = self::findOne($id)) $model->updateAttributes(['known' => true]);
 	}
 
 	/**
