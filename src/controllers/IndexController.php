@@ -60,6 +60,6 @@ class IndexController extends Controller {
 		} else {
 			SysExceptions::acknowledgeOne($id);
 		}
-		$this->redirect('index');
+		$this->redirect(['index']);
 	}
 }
