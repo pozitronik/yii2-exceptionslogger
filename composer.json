@@ -17,7 +17,8 @@
 	],
 	"minimum-stability": "dev",
 	"require": {
-		"pozitronik/yii2-helpers": "*"
+		"pozitronik/yii2-helpers": "dev-master",
+		"pozitronik/yii2-core-tools": "dev-master"
 	},
 	"require-dev": {
 		"yiisoft/yii2": "dev-master"
@@ -26,5 +27,17 @@
 		"psr-4": {
 			"pozitronik\\sys_exceptions\\": "src"
 		}
-	}
+	},
+	"config": {
+		"process-timeout": 1800,
+		"fxp-asset": {
+			"enabled": false
+		}
+	},
+	"repositories": [
+		{
+			"type": "composer",
+			"url": "https://asset-packagist.org"
+		}
+	]
 }
