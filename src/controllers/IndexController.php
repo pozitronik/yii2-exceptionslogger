@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\controllers\admin;
+namespace pozitronik\sys_exceptions\controllers;
 
 use pozitronik\sys_exceptions\models\SysExceptions;
 use Throwable;
