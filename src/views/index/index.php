@@ -20,6 +20,7 @@ $this->title = 'Системные сбои';
 		<?= GridView::widget([
 			'dataProvider' => $dataProvider,
 			'columns' => [
+				'id',
 				'timestamp',
 				[
 					'attribute' => 'user_id',
@@ -38,9 +39,10 @@ $this->title = 'Системные сбои';
 				'message',
 				[
 					'class' => ActionColumn::class,
+					'template' => '{view} {acknowledge}',
 					'buttons' => [
 						'acknowledge' => static function(string $url) {
-							return Html::a('', $url, ['class' => 'fa fa-thumbs-o-up', 'title' => 'Acknowledge']);
+							return Html::a('', $url, ['class' => 'glyphicon glyphicon-ok', 'title' => 'Acknowledge']);
 						}
 					]
 				]
