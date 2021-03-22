@@ -9,10 +9,9 @@ use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 
 /**
- * Class ExceptionsController
- * @package app\controllers\admin
+ * Class IndexController
  */
-class ExceptionsController extends Controller {
+class IndexController extends Controller {
 
 	/**
 	 * @return string
