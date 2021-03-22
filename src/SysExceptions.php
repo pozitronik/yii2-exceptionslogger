@@ -71,7 +71,7 @@ class SysExceptions extends ActiveRecord {
 	 * @throws Throwable
 	 */
 	public static function log(Throwable $t, bool $throw = false, bool $known_error = false):void {
-		$logger = new self;
+		$logger = new self();
 		try {
 			$logger->setAttributes([
 				'user_id' => Yii::$app->request->isConsoleRequest?0:Yii::$app->user->id,
@@ -94,7 +94,7 @@ class SysExceptions extends ActiveRecord {
 
 	/**
 	 * Acknowledge record
-	 * @param integer $id
+	 * @param int $id
 	 * @throws Throwable
 	 */
 	public static function acknowledgeOne(int $id):void {
