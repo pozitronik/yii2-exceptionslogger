@@ -27,6 +27,14 @@ use yii\helpers\ArrayHelper;
  */
 class SysExceptions extends ActiveRecord {
 
+	/**
+	 * @var Connection|array|string the DB connection object or the application component ID of the DB connection.
+	 * After the SysOptions object is created, if you want to change this property, you should only assign it
+	 * with a DB connection object.
+	 * This can also be a configuration array for creating the object.
+	 */
+	public $db = 'db';
+
 	private const DEFAULT_TABLE_NAME = 'sys_options';
 
 	/**
