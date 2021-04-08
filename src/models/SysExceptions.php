@@ -87,11 +87,12 @@ class SysExceptions extends ActiveRecord {
 	/**
 	 * В случае, если надо поставить отлов и логирование исключения
 	 * @param Throwable $t
-	 * @param bool $throw - Если передано исключение, оно выбросится в случае ненахождения модели
-	 * @param bool $known_error - Пометить исключение, как известное. Сделано для пометки исключений, с которыми мы ничего сделать не можем (ошибка сторонних сервисов, например).
+	 * @param bool $throw Если передано исключение, оно выбросится в случае ненахождения модели
+	 * @param bool $known_error Пометить исключение, как известное. Сделано для пометки исключений, с которыми мы ничего сделать не можем (ошибка сторонних сервисов, например).
+	 * @return null|string Результат сделан для удобства, и ни на что не влияет
 	 * @throws Throwable
 	 */
-	public static function log(Throwable $t, bool $throw = false, bool $known_error = false):void {
+	public static function log(Throwable $t, bool $throw = false, bool $known_error = false):?string {
 		$logger = new self();
 		try {
 			$logger->setAttributes([
@@ -105,12 +106,13 @@ class SysExceptions extends ActiveRecord {
 				'post' => json_encode($_POST),
 				'known' => $known_error
 			]);
-			if (!$logger->save()) Utils::fileLog($logger->attributes, 'exception catch', 'exception.log');
+			if (!$logger->save()) return Utils::fileLog($logger->attributes, 'exception catch', 'exception.log');
 		} /** @noinspection BadExceptionsProcessingInspection */ catch (Throwable $t) {
-			Utils::fileLog($logger->attributes, '!!!exception catch', 'exception.log');
+			return Utils::fileLog($logger->attributes, '!!!exception catch', 'exception.log');
 		} finally {
 			if ($throw) throw $t;
 		}
+		return null;
 	}
 
 	/**
