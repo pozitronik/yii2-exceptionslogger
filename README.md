@@ -24,8 +24,7 @@ to the require section of your `composer.json` file.
 Requirements
 ------------
 
-Yii2,
-PHP >= 7.2.0
+Yii2, PHP >= 7.2.0
 
 Usage
 -----
@@ -35,10 +34,13 @@ At first, run a included migration:
 yii migrate/up --migrationPath=vendor/pozitronik/yii2-exceptionslogger/migrations
 ```
 
-This extension provides an SysExceptions::log() static function, that can accept any Throwable interface as first parameter. All exception data will be saved in `sys_exceptions` table (in case of database failure data will be written into `runtime/exception.log` file).
+This extension provides an SysExceptions::log() static function, that can accept any Throwable interface as first
+parameter. All exception data will be saved in `sys_exceptions` table (in case of database failure data will be written
+into `runtime/exception.log` file).
 
 Example of usage
 ----------------
+
 ```php
 try {
 	$i = $i/0;
@@ -47,4 +49,18 @@ try {
 	SysExceptions::log(new RuntimeException("Someone tried divide to zero"), false, true);//silently log own exception and mark it as known error
 	SysExceptions::log(new RuntimeException("It prohibited by mathematics"), true);//log own exception and throw it
 }
+```
+
+Also, LoggedException class provided. Just wrap your current exceptions in it, like:
+
+```php
+    throw new LoggedException(
+        new HttpException('Bad thing')
+    );
+```
+
+instead of:
+
+```php
+throw new HttpException('Bad thing');
 ```
