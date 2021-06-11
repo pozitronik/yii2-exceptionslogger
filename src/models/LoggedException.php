@@ -9,6 +9,7 @@ use Throwable;
 /**
  * Class LoggedException
  * @package pozitronik\sys_exceptions\models
+ * @deprecated @since 1.0.4
  */
 class LoggedException extends Exception {
 
