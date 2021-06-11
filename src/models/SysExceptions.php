@@ -58,7 +58,7 @@ class SysExceptions extends ActiveRecord {
 	public function rules():array {
 		return [
 			[['timestamp', 'get', 'post'], 'safe'],
-			[['user_id', 'code', 'line'], 'integer'],
+			[['user_id', 'code', 'line', 'statusCode'], 'integer'],
 			[['message', 'trace'], 'string'],
 			[['file'], 'string', 'max' => 255],
 			['known', 'boolean']
@@ -74,6 +74,7 @@ class SysExceptions extends ActiveRecord {
 			'timestamp' => 'Время',
 			'user_id' => 'Пользователь',
 			'code' => 'Код',
+			'statusCode' => 'HTTP-код статуса',
 			'file' => 'Файл',
 			'line' => 'Строка',
 			'message' => 'Сообщение',
@@ -96,6 +97,7 @@ class SysExceptions extends ActiveRecord {
 		try {
 			$logger->setAttributes([
 				'user_id' => Yii::$app->request->isConsoleRequest?0:Yii::$app->user->id,
+				'statusCode' => isset($t->statusCode)?$t->statusCode:null,
 				'code' => $t->getCode(),
 				'file' => $t->getFile(),
 				'line' => $t->getLine(),
