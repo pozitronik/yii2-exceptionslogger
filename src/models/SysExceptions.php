@@ -25,7 +25,7 @@ use yii\helpers\ArrayHelper;
  * @property string $post
  * @property bool $known
  */
-class SysExceptions extends ActiveRecord{
+class SysExceptions extends ActiveRecord {
 
 	/**
 	 * @var Connection|array|string the DB connection object or the application component ID of the DB connection.
@@ -135,6 +135,5 @@ class SysExceptions extends ActiveRecord{
 	public static function unknownCount():int {
 		return self::find()->andOnCondition(['known' => false])->count();
 	}
-
 
 }
