@@ -15,38 +15,36 @@ use yii\web\View;
 $this->title = 'Системные сбои';
 
 ?>
-<div class="row">
-	<div class="col-xs-12">
-		<?= GridView::widget([
-			'dataProvider' => $dataProvider,
-			'columns' => [
-				'id',
-				'timestamp',
-				[
-					'attribute' => 'user_id',
-					'value' => static function(SysExceptions $model) {
-						return $model->user_id;
-					},
-					'format' => 'raw'
-				],
-				[
-					'attribute' => 'file',
-					'value' => static function(SysExceptions $model) {
-						return "{$model->file}:{$model->line}";
-					},
-					'format' => 'raw'
-				],
-				'message',
-				[
-					'class' => ActionColumn::class,
-					'template' => '{view} {acknowledge}',
-					'buttons' => [
-						'acknowledge' => static function(string $url) {
-							return Html::a('', $url, ['class' => 'glyphicon glyphicon-ok', 'title' => 'Acknowledge']);
-						}
-					]
-				]
+<?= GridView::widget([
+	'dataProvider' => $dataProvider,
+	'columns' => [
+		'id',
+		'timestamp',
+		'code',
+		'statusCode',
+		[
+			'attribute' => 'user_id',
+			'value' => static function(SysExceptions $model) {
+				return $model->user_id;
+			},
+			'format' => 'raw'
+		],
+		[
+			'attribute' => 'file',
+			'value' => static function(SysExceptions $model) {
+				return "{$model->file}:{$model->line}";
+			},
+			'format' => 'raw'
+		],
+		'message',
+		[
+			'class' => ActionColumn::class,
+			'template' => '{view} {acknowledge}',
+			'buttons' => [
+				'acknowledge' => static function(string $url) {
+					return Html::a('', $url, ['class' => 'fa fa-ok', 'title' => 'Acknowledge']);
+				}
 			]
-		]) ?>
-	</div>
-</div>
+		]
+	]
+]) ?>
