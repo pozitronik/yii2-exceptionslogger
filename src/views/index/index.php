@@ -42,7 +42,7 @@ $this->title = 'Системные сбои';
 			'template' => '{view} {acknowledge}',
 			'buttons' => [
 				'acknowledge' => static function(string $url) {
-					return Html::a('', $url, ['class' => 'fa fa-ok', 'title' => 'Acknowledge']);
+					return Html::a('', $url, ['class' => 'fa fa-check', 'title' => 'Acknowledge']);
 				}
 			]
 		]
