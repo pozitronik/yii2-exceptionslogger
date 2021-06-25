@@ -40,7 +40,7 @@ class SysExceptions extends ActiveRecord {
 	/**
 	 * @inheritdoc
 	 */
-	public function init() {
+	public function init():void {
 		parent::init();
 		$this->db = Instance::ensure($this->db, Connection::class);
 	}
@@ -97,7 +97,7 @@ class SysExceptions extends ActiveRecord {
 		try {
 			$logger->setAttributes([
 				'user_id' => Yii::$app->request->isConsoleRequest?0:Yii::$app->user->id,
-				'statusCode' => isset($t->statusCode)?$t->statusCode:null,
+				'statusCode' => $t->statusCode??null,
 				'code' => $t->getCode(),
 				'file' => $t->getFile(),
 				'line' => $t->getLine(),

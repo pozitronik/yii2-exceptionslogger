@@ -13,7 +13,7 @@ class ErrorHandler extends YiiErrorHandler {
 	/**
 	 * @inheritDoc
 	 */
-	public function logException($exception) {
+	public function logException($exception):void {
 		parent::logException($exception);
 		SysExceptions::log($exception);
 	}
