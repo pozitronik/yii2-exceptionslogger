@@ -4,7 +4,7 @@ declare(strict_types = 1);
 
 namespace pozitronik\sys_exceptions;
 
-use pozitronik\core\traits\ModuleExtended;
+use pozitronik\traits\ModuleTrait;
 use yii\base\Module;
 
 /**
@@ -12,5 +12,5 @@ use yii\base\Module;
  * @package pozitronik\sys_exceptions
  */
 class SysExceptionsModule extends Module {
-	use ModuleExtended;
+	use ModuleTrait;
 }
