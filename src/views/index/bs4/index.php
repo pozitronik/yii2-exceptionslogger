@@ -8,8 +8,8 @@ declare(strict_types = 1);
 use pozitronik\sys_exceptions\models\SysExceptions;
 use yii\data\ActiveDataProvider;
 use yii\grid\ActionColumn;
-use yii\grid\GridView;
-use yii\helpers\Html;
+use kartik\grid\GridView;
+use yii\bootstrap4\Html;
 use yii\web\View;
 
 $this->title = 'Системные сбои';

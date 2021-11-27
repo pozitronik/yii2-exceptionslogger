@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace pozitronik\sys_exceptions\controllers;
 
+use pozitronik\helpers\BootstrapHelper;
 use pozitronik\sys_exceptions\models\SysExceptions;
 use Throwable;
 use yii\data\ActiveDataProvider;
@@ -12,6 +13,13 @@ use yii\web\Controller;
  * Class IndexController
  */
 class IndexController extends Controller {
+
+	/**
+	 * @inheritDoc
+	 */
+	public function getViewPath():string {
+		return parent::getViewPath().DIRECTORY_SEPARATOR.(BootstrapHelper::isBs4()?'bs4':'bs3');
+	}
 
 	/**
 	 * @return string
