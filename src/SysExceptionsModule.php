@@ -1,5 +1,4 @@
 <?php
-/** @noinspection EmptyClassInspection */
 declare(strict_types = 1);
 
 namespace pozitronik\sys_exceptions;
