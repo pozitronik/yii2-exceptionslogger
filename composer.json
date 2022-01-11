@@ -17,9 +17,9 @@
 	],
 	"minimum-stability": "dev",
 	"require": {
-		"php": ">=7.4",
-		"pozitronik/yii2-helpers": "dev-master",
-		"pozitronik/yii2-traits": "dev-master",
+		"php": ">=8.0",
+		"pozitronik/yii2-helpers": "dev-dev",
+		"pozitronik/yii2-traits": "dev-dev",
 		"kartik-v/yii2-grid": "dev-master"
 	},
 	"require-dev": {
