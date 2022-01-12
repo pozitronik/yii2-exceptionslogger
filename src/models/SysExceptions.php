@@ -33,7 +33,7 @@ class SysExceptions extends ActiveRecord {
 	 * with a DB connection object.
 	 * This can also be a configuration array for creating the object.
 	 */
-	public $db = 'db';
+	public string $db = 'db';
 
 	private const DEFAULT_TABLE_NAME = 'sys_exceptions';
 
