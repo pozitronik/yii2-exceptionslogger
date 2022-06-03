@@ -42,7 +42,12 @@ $this->title = $model->file;
 					'message',
 					'trace:ntext',
 					'get',
-					'post',
+					[
+						'attribute' => 'post',
+						'contentOptions' => [
+							'style' => 'word-wrap: anywhere;'
+						]
+					],
 					'known:boolean',
 					'user_agent'
 				]
