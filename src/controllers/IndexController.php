@@ -31,7 +31,7 @@ class IndexController extends Controller {
 	 */
 	public function actionIndex():string {
 		$searchModel = new SysExceptionsSearch();
-		$dataProvider = $searchModel->search(Yii::$app->request->params);
+		$dataProvider = $searchModel->search(Yii::$app->request->post());
 		return $this->render('index', compact('searchModel', 'dataProvider'));
 	}
 

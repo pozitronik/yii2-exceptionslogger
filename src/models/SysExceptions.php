@@ -52,7 +52,7 @@ class SysExceptions extends ActiveRecord {
 	 * @inheritdoc
 	 */
 	public static function tableName():string {
-		return SysExceptionsModule::param('tableName', static::DEFAULT_TABLE_NAME);
+		return SysExceptionsModule::param('tableName', self::DEFAULT_TABLE_NAME);
 	}
 
 	/**

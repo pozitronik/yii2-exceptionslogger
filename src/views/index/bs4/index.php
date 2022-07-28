@@ -6,6 +6,8 @@ declare(strict_types = 1);
  * @var SysExceptionsSearch $searchModel
  */
 
+use kartik\daterange\DateRangePicker;
+use kartik\grid\DataColumn;
 use pozitronik\sys_exceptions\models\SysExceptions;
 use pozitronik\sys_exceptions\models\SysExceptionsSearch;
 use yii\data\ActiveDataProvider;
@@ -22,21 +24,37 @@ $this->title = 'Системные сбои';
 	'filterModel' => $searchModel,
 	'columns' => [
 		'id',
-		'timestamp',
+		[
+			'class' => DataColumn::class,
+			'attribute' => 'timestamp',
+			'format' => 'datetime',
+			'filterType' => DateRangePicker::class,
+			'filterWidgetOptions' => [
+				'convertFormat' => true,
+				'hideInput' => true,
+				'presetDropdown' => true,
+				'pluginOptions' => [
+					'timePicker' => false,
+				]
+			]
+		],
 		'code',
 		'statusCode',
+		'get',
+		'post',
+		'message',
+		'trace:ntext',
+		'known:boolean',
 		[
+			'class' => DataColumn::class,
 			'attribute' => 'user_id',
-			'value' => static function(SysExceptions $model) {
-				return $model->user_id;
-			},
+			'value' => static fn(SysExceptions $model) => $model->user_id,
 			'format' => 'raw'
 		],
 		[
+			'class' => DataColumn::class,
 			'attribute' => 'file',
-			'value' => static function(SysExceptions $model) {
-				return "{$model->file}:{$model->line}";
-			},
+			'value' => static fn(SysExceptions $model) => "{$model->file}:{$model->line}",
 			'format' => 'raw'
 		],
 		'message',
@@ -44,9 +62,7 @@ $this->title = 'Системные сбои';
 			'class' => ActionColumn::class,
 			'template' => '{view} {acknowledge}',
 			'buttons' => [
-				'acknowledge' => static function(string $url) {
-					return Html::a('', $url, ['class' => 'fa fa-check', 'title' => 'Acknowledge']);
-				}
+				'acknowledge' => static fn(string $url) => Html::a('', $url, ['class' => 'fa fa-check', 'title' => 'Acknowledge'])
 			]
 		]
 	]
