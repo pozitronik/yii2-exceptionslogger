@@ -5,9 +5,10 @@ namespace pozitronik\sys_exceptions\controllers;
 
 use pozitronik\helpers\BootstrapHelper;
 use pozitronik\sys_exceptions\models\SysExceptions;
+use pozitronik\sys_exceptions\models\SysExceptionsSearch;
 use pozitronik\sys_exceptions\SysExceptionsModule;
 use Throwable;
-use yii\data\ActiveDataProvider;
+use Yii;
 use yii\web\Controller;
 
 /**
@@ -26,27 +27,12 @@ class IndexController extends Controller {
 
 	/**
 	 * @return string
+	 * @throws Throwable
 	 */
 	public function actionIndex():string {
-		$dataProvider = new ActiveDataProvider([
-			'query' => SysExceptions::find()->andOnCondition(['known' => false])
-		]);
-
-		$mainAttributes = [
-			'defaultOrder' => ['timestamp' => SORT_DESC],
-			'attributes' => [
-				'timestamp',
-				'user_id',
-				'file',
-				'message'
-			]
-		];
-
-		$dataProvider->setSort($mainAttributes);
-
-		return $this->render('index', [
-			'dataProvider' => $dataProvider
-		]);
+		$searchModel = new SysExceptionsSearch();
+		$dataProvider = $searchModel->search(Yii::$app->request->params);
+		return $this->render('index', compact('searchModel', 'dataProvider'));
 	}
 
 	/**

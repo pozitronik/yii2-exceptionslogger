@@ -3,11 +3,13 @@ declare(strict_types = 1);
 /**
  * @var View $this
  * @var ActiveDataProvider $dataProvider
+ * @var SysExceptionsSearch $searchModel
  */
 
 use kartik\grid\ActionColumn;
 use kartik\grid\GridView;
 use pozitronik\sys_exceptions\models\SysExceptions;
+use pozitronik\sys_exceptions\models\SysExceptionsSearch;
 use yii\data\ActiveDataProvider;
 use yii\helpers\Html;
 use yii\web\View;
@@ -17,6 +19,7 @@ $this->title = 'Системные сбои';
 ?>
 <?= GridView::widget([
 	'dataProvider' => $dataProvider,
+	'filterModel' => $searchModel,
 	'columns' => [
 		'id',
 		'timestamp',
