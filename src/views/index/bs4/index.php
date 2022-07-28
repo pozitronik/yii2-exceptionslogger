@@ -35,6 +35,7 @@ $this->title = 'Системные сбои';
 				'presetDropdown' => true,
 				'pluginOptions' => [
 					'timePicker' => false,
+					'format' => 'Y-m-d'
 				]
 			]
 		],

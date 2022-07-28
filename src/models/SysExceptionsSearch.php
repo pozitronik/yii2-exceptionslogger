@@ -17,7 +17,7 @@ class SysExceptionsSearch extends SysExceptions {
 	 * @throws Throwable
 	 */
 	public function search(array $params):ActiveDataProvider {
-		$query = SysExceptions::find()->andOnCondition(['known' => false]);
+		$query = SysExceptions::find();
 
 		$dataProvider = new ActiveDataProvider([
 			'query' => $query
