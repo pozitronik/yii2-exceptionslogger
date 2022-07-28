@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace pozitronik\sys_exceptions\models;
 
 use pozitronik\helpers\Utils;
+use pozitronik\sys_exceptions\SysExceptionsModule;
 use Yii;
 use Throwable;
 use yii\db\ActiveRecord;
@@ -49,7 +50,7 @@ class SysExceptions extends ActiveRecord {
 	 * @inheritdoc
 	 */
 	public static function tableName():string {
-		return ArrayHelper::getValue(Yii::$app->modules, 'sysexceptions.params.tableName', static::DEFAULT_TABLE_NAME);
+		return SysExceptionsModule::param('tableName', static::DEFAULT_TABLE_NAME);
 	}
 
 	/**
