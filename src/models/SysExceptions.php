@@ -5,12 +5,12 @@ namespace pozitronik\sys_exceptions\models;
 
 use pozitronik\helpers\Utils;
 use pozitronik\sys_exceptions\SysExceptionsModule;
+use pozitronik\traits\traits\ActiveRecordTrait;
 use Yii;
 use Throwable;
 use yii\db\ActiveRecord;
 use yii\db\Connection;
 use yii\di\Instance;
-use yii\helpers\ArrayHelper;
 
 /**
  *
@@ -27,6 +27,7 @@ use yii\helpers\ArrayHelper;
  * @property bool $known
  */
 class SysExceptions extends ActiveRecord {
+	use ActiveRecordTrait;
 
 	/**
 	 * @var Connection|array|string the DB connection object or the application component ID of the DB connection.
