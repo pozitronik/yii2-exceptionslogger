@@ -18,6 +18,7 @@ use yii\di\Instance;
  * @property string $timestamp
  * @property int $user_id
  * @property int $code
+ * @property int $statusCode
  * @property string $file
  * @property int $line
  * @property string $message
