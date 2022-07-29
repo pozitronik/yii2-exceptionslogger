@@ -31,7 +31,8 @@ class SysExceptionsSearch extends SysExceptions {
 				'timestamp',
 				'user_id',
 				'file',
-				'message'
+				'message',
+				'known'
 			]
 		]);
 		$this->load($params);
@@ -43,7 +44,6 @@ class SysExceptionsSearch extends SysExceptions {
 		$query->andFilterWhere(['like', SysExceptions::fieldName('post'), $this->post]);
 		$query->andFilterWhere([SysExceptions::fieldName('user_id') => $this->user_id]);
 		$query->andFilterWhere([SysExceptions::fieldName('code') => $this->code]);
-		$query->andFilterWhere([SysExceptions::fieldName('line') => $this->line]);
 		$query->andFilterWhere([SysExceptions::fieldName('statusCode') => $this->statusCode]);
 		$query->andFilterWhere(['like', SysExceptions::fieldName('message'), $this->message]);
 		$query->andFilterWhere(['like', SysExceptions::fieldName('trace'), $this->trace]);
