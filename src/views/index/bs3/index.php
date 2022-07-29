@@ -11,6 +11,7 @@ use kartik\grid\ActionColumn;
 use kartik\grid\GridView;
 use pozitronik\sys_exceptions\models\SysExceptions;
 use pozitronik\sys_exceptions\models\SysExceptionsSearch;
+use pozitronik\sys_exceptions\SysExceptionsModule;
 use yii\data\ActiveDataProvider;
 use yii\grid\DataColumn;
 use yii\helpers\Html;
@@ -22,6 +23,16 @@ $this->title = 'Системные сбои';
 <?= GridView::widget([
 	'dataProvider' => $dataProvider,
 	'filterModel' => $searchModel,
+	'panel' => [
+		'heading' => false,
+	],
+	'replaceTags' => [
+		'{logsBtn}' => SysExceptionsModule::a('runtime/logs', 'index/logs', ['class' => 'btn btn-default'])
+	],
+	'toolbar' => [
+		'{logsBtn}'
+	],
+	'panelBeforeTemplate' => '<div class="pull-left">{toolbarContainer}</div>{summary}{before}<div class="clearfix"></div>',
 	'columns' => [
 		'id',
 		[

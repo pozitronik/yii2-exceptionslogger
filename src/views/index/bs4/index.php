@@ -10,6 +10,7 @@ use kartik\daterange\DateRangePicker;
 use kartik\grid\DataColumn;
 use pozitronik\sys_exceptions\models\SysExceptions;
 use pozitronik\sys_exceptions\models\SysExceptionsSearch;
+use pozitronik\sys_exceptions\SysExceptionsModule;
 use yii\data\ActiveDataProvider;
 use yii\grid\ActionColumn;
 use kartik\grid\GridView;
@@ -22,6 +23,16 @@ $this->title = 'Системные сбои';
 <?= GridView::widget([
 	'dataProvider' => $dataProvider,
 	'filterModel' => $searchModel,
+	'panel' => [
+		'heading' => false,
+	],
+	'replaceTags' => [
+		'{logsBtn}' => SysExceptionsModule::a('runtime/logs', 'index/logs', ['class' => 'btn btn-default'])
+	],
+	'toolbar' => [
+		'{logsBtn}'
+	],
+	'panelBeforeTemplate' => '<div class="float-left">{toolbarContainer}</div>{summary}{before}<div class="clearfix"></div>',
 	'columns' => [
 		'id',
 		[
