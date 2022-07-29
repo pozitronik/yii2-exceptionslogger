@@ -31,7 +31,7 @@ class LogDownloader extends Component {
 		$files = array_combine(array_map(static fn($value) => PathHelper::ExtractBaseName($value), $files), $files);
 		$tmpZipFile = ZipHelper::compressFiles($files);
 
-		return Yii::$app->response->sendContentAsFile(readfile($tmpZipFile), $this->outFilename, [
+		return Yii::$app->response->sendContentAsFile(file_get_contents($tmpZipFile), $this->outFilename, [
 			'mimeType' => FileHelper::getMimeTypeByExtension($this->outFilename)
 		]);
 	}
