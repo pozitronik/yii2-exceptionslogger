@@ -26,6 +26,8 @@ class SysExceptionsSearch extends SysExceptions {
 		$dataProvider->setSort([
 			'defaultOrder' => ['timestamp' => SORT_DESC],
 			'attributes' => [
+				'id',
+				'code',
 				'timestamp',
 				'user_id',
 				'file',
