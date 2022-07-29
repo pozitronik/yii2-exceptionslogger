@@ -21,7 +21,7 @@ use yii\web\Response;
  */
 class LogDownloader extends Component {
 
-	public Closure|string $baseDir = '@app/runtime';
+	public Closure|string $baseDir = '@app/runtime/logs';
 
 	public Closure|string $fileMask = '*';
 
