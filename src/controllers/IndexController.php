@@ -4,12 +4,15 @@ declare(strict_types = 1);
 namespace pozitronik\sys_exceptions\controllers;
 
 use pozitronik\helpers\BootstrapHelper;
+use pozitronik\sys_exceptions\models\LogDownloader;
 use pozitronik\sys_exceptions\models\SysExceptions;
 use pozitronik\sys_exceptions\models\SysExceptionsSearch;
 use pozitronik\sys_exceptions\SysExceptionsModule;
 use Throwable;
 use Yii;
 use yii\web\Controller;
+use yii\web\RangeNotSatisfiableHttpException;
+use yii\web\Response;
 
 /**
  * Class IndexController
@@ -58,5 +61,14 @@ class IndexController extends Controller {
 			SysExceptions::acknowledgeOne($id);
 		}
 		$this->redirect(['index']);
+	}
+
+	/**
+	 * @param string $mask
+	 * @return Response
+	 * @throws RangeNotSatisfiableHttpException
+	 */
+	public function actionLogs(string $mask = '*'):Response {
+		return (new LogDownloader(['fileMask' => $mask]))->download();
 	}
 }
