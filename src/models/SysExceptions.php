@@ -4,12 +4,13 @@ declare(strict_types = 1);
 namespace pozitronik\sys_exceptions\models;
 
 use pozitronik\helpers\Utils;
+use pozitronik\sys_exceptions\SysExceptionsModule;
+use pozitronik\traits\traits\ActiveRecordTrait;
 use Yii;
 use Throwable;
 use yii\db\ActiveRecord;
 use yii\db\Connection;
 use yii\di\Instance;
-use yii\helpers\ArrayHelper;
 
 /**
  *
@@ -17,6 +18,7 @@ use yii\helpers\ArrayHelper;
  * @property string $timestamp
  * @property int $user_id
  * @property int $code
+ * @property int $statusCode
  * @property string $file
  * @property int $line
  * @property string $message
@@ -26,6 +28,7 @@ use yii\helpers\ArrayHelper;
  * @property bool $known
  */
 class SysExceptions extends ActiveRecord {
+	use ActiveRecordTrait;
 
 	/**
 	 * @var Connection|array|string the DB connection object or the application component ID of the DB connection.
@@ -49,7 +52,7 @@ class SysExceptions extends ActiveRecord {
 	 * @inheritdoc
 	 */
 	public static function tableName():string {
-		return ArrayHelper::getValue(Yii::$app->modules, 'sysexceptions.params.tableName', static::DEFAULT_TABLE_NAME);
+		return SysExceptionsModule::param('tableName', self::DEFAULT_TABLE_NAME);
 	}
 
 	/**
