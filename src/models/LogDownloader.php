@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace pozitronik\sys_exceptions\models;
 
+use pozitronik\helpers\PathHelper;
 use pozitronik\helpers\ZipHelper;
 use Yii;
 use yii\base\Component;
@@ -22,11 +23,12 @@ class LogDownloader extends Component {
 	public string $outFilename = 'logs.zip';
 
 	/**
-	 * @return Response|null
+	 * @return Response
 	 * @throws RangeNotSatisfiableHttpException
 	 */
-	public function download():?Response {
-		$files = FileHelper::findFiles($this->baseDir, ['only' => $this->fileMask]);
+	public function download():Response {
+		$files = FileHelper::findFiles(Yii::getAlias($this->baseDir), ['only' => [$this->fileMask]]);
+		$files = array_combine(array_map(static fn($value) => PathHelper::ExtractBaseName($value), $files), $files);
 		$tmpZipFile = ZipHelper::compressFiles($files);
 
 		return Yii::$app->response->sendContentAsFile(readfile($tmpZipFile), $this->outFilename, [
