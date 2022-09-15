@@ -24,7 +24,7 @@ class m000000_000002_sys_exceptions_timestamps_timezones extends Migration {
 	 */
 	public function safeUp() {
 		if (null !== ArrayHelper::getValue($this->db->schema->typeMap, 'timestamptz')) {
-			$this->alterColumn(self::mainTableName(), 'timestamp', $this->timestamptz(0)->notNull()->comment('Дата и время создания.'));
+			$this->alterColumn(self::mainTableName(), 'timestamp', $this->timestamptz(0)->defaultExpression('CURRENT_TIMESTAMP')->notNull()->comment('Дата и время создания.'));
 		} else {
 			Yii::info('timestamptz column type is not supported bu DB schema, migration not applied.');
 		}
