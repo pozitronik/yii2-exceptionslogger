@@ -11,10 +11,15 @@ use yii\web\ErrorHandler as YiiErrorHandler;
 class ErrorHandler extends YiiErrorHandler {
 
 	/**
+	 * @var int|null id of last logged exception
+	 */
+	public null|int $id = null;
+
+	/**
 	 * @inheritDoc
 	 */
 	public function logException($exception):void {
 		parent::logException($exception);
-		SysExceptions::log($exception);
+		$this->id = SysExceptions::log($exception);
 	}
 }
