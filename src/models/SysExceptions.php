@@ -3,7 +3,6 @@ declare(strict_types = 1);
 
 namespace pozitronik\sys_exceptions\models;
 
-use pozitronik\helpers\Utils;
 use pozitronik\sys_exceptions\SysExceptionsModule;
 use pozitronik\traits\traits\ActiveRecordTrait;
 use Yii;
@@ -114,9 +113,9 @@ class SysExceptions extends ActiveRecord {
 			if ($logger->save()) {
 				return $logger->id;
 			}
-			Utils::fileLog($logger->attributes, 'exception catch', 'exception.log');
+            Yii::error($logger->attributes, 'sys.exeptions');
 		} /** @noinspection BadExceptionsProcessingInspection */ catch (Throwable $t) {
-			Utils::fileLog($logger->attributes, '!!!exception catch', 'exception.log');
+            Yii::error($logger->attributes, 'sys.exeptions');
 		} finally {
 			if ($throw) throw $t;
 		}
