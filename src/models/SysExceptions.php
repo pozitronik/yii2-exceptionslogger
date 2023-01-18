@@ -79,13 +79,15 @@ class SysExceptions extends ActiveRecord {
 	public static function log(Throwable $t, bool $throw = false, bool $known_error = false):?int {
 		$logger = new self();
 		try {
-			$logger->setAttributes(['user_id' => Yii::$app->request->isConsoleRequest?0:Yii::$app->user->id, 'statusCode' => $t->statusCode??null, 'code' => $t->getCode(), 'file' => $t->getFile(), 'line' => $t->getLine(), 'message' => $t->getMessage(), 'trace' => $t->getTraceAsString(), 'get' => json_encode($_GET), 'post' => json_encode($_POST), 'known' => $known_error]);
+			$logger->setAttributes(['user_id' => Yii::$app->request->isConsoleRequest
+				?0
+				:Yii::$app->user->id, 'statusCode' => $t->statusCode??null, 'code' => $t->getCode(), 'file' => $t->getFile(), 'line' => $t->getLine(), 'message' => $t->getMessage(), 'trace' => $t->getTraceAsString(), 'get' => json_encode($_GET), 'post' => json_encode($_POST), 'known' => $known_error]);
 			if ($logger->save()) {
 				return $logger->id;
 			}
-			Yii::error($logger->attributes, 'sys.exeptions');
+			Yii::error($logger->attributes, 'sys.exceptions');
 		} /** @noinspection BadExceptionsProcessingInspection */ catch (Throwable $t) {
-			Yii::error($logger->attributes, 'sys.exeptions');
+			Yii::error($logger->attributes, 'sys.exceptions');
 		} finally {
 			if ($throw)
 				throw $t;
