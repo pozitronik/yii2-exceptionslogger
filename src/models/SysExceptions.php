@@ -28,6 +28,8 @@ use yii\di\Instance;
  */
 class SysExceptions extends ActiveRecord {
 	use ActiveRecordTrait;
+	/* Enables logging to Yii::error even when message logged to db, i.e. for all errors */
+	public static bool $yiiErrorLog = false;
 
 	/**
 	 * @var Connection|array|string the DB connection object or the application component ID of the DB connection.
@@ -45,6 +47,7 @@ class SysExceptions extends ActiveRecord {
 	public function init():void {
 		parent::init();
 		$this->db = Instance::ensure($this->db, Connection::class);
+		static::$yiiErrorLog = SysExceptionsModule::param('yiiErrorLog', static::$yiiErrorLog);
 	}
 
 	/**
@@ -110,11 +113,9 @@ class SysExceptions extends ActiveRecord {
 				'post' => json_encode($_POST),
 				'known' => $known_error
 			]);
-			if ($logger->save()) {
-				return $logger->id;
-			}
-			Yii::error($logger->attributes, 'sys.exceptions');
-		} /** @noinspection BadExceptionsProcessingInspection */ catch (Throwable $t) {
+			if ($logger->save()) return $logger->id;
+			if (static::$yiiErrorLog) Yii::error($logger->attributes, 'sys.exceptions');
+		} catch (Throwable $t) {
 			Yii::error($logger->attributes, 'sys.exceptions');
 		} finally {
 			if ($throw) throw $t;
