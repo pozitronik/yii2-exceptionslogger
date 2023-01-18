@@ -58,33 +58,14 @@ class SysExceptions extends ActiveRecord {
 	 * @inheritdoc
 	 */
 	public function rules():array {
-		return [
-			[['timestamp', 'get', 'post'], 'safe'],
-			[['user_id', 'code', 'line', 'statusCode'], 'integer'],
-			[['message', 'trace'], 'string'],
-			[['file'], 'string', 'max' => 255],
-			['known', 'boolean']
-		];
+		return [[['timestamp', 'get', 'post'], 'safe'], [['user_id', 'code', 'line', 'statusCode'], 'integer'], [['message', 'trace'], 'string'], [['file'], 'string', 'max' => 255], ['known', 'boolean']];
 	}
 
 	/**
 	 * @inheritdoc
 	 */
 	public function attributeLabels():array {
-		return [
-			'id' => 'ID',
-			'timestamp' => 'Время',
-			'user_id' => 'Пользователь',
-			'code' => 'Код',
-			'statusCode' => 'HTTP-код статуса',
-			'file' => 'Файл',
-			'line' => 'Строка',
-			'message' => 'Сообщение',
-			'trace' => 'Trace',
-			'get' => '$_GET',
-			'post' => '$_POST',
-			'known' => 'Известная ошибка'
-		];
+		return ['id' => 'ID', 'timestamp' => 'Время', 'user_id' => 'Пользователь', 'code' => 'Код', 'statusCode' => 'HTTP-код статуса', 'file' => 'Файл', 'line' => 'Строка', 'message' => 'Сообщение', 'trace' => 'Trace', 'get' => '$_GET', 'post' => '$_POST', 'known' => 'Известная ошибка'];
 	}
 
 	/**
@@ -98,26 +79,16 @@ class SysExceptions extends ActiveRecord {
 	public static function log(Throwable $t, bool $throw = false, bool $known_error = false):?int {
 		$logger = new self();
 		try {
-			$logger->setAttributes([
-				'user_id' => Yii::$app->request->isConsoleRequest?0:Yii::$app->user->id,
-				'statusCode' => $t->statusCode??null,
-				'code' => $t->getCode(),
-				'file' => $t->getFile(),
-				'line' => $t->getLine(),
-				'message' => $t->getMessage(),
-				'trace' => $t->getTraceAsString(),
-				'get' => json_encode($_GET),
-				'post' => json_encode($_POST),
-				'known' => $known_error
-			]);
+			$logger->setAttributes(['user_id' => Yii::$app->request->isConsoleRequest?0:Yii::$app->user->id, 'statusCode' => $t->statusCode??null, 'code' => $t->getCode(), 'file' => $t->getFile(), 'line' => $t->getLine(), 'message' => $t->getMessage(), 'trace' => $t->getTraceAsString(), 'get' => json_encode($_GET), 'post' => json_encode($_POST), 'known' => $known_error]);
 			if ($logger->save()) {
 				return $logger->id;
 			}
-            Yii::error($logger->attributes, 'sys.exeptions');
+			Yii::error($logger->attributes, 'sys.exeptions');
 		} /** @noinspection BadExceptionsProcessingInspection */ catch (Throwable $t) {
-            Yii::error($logger->attributes, 'sys.exeptions');
+			Yii::error($logger->attributes, 'sys.exeptions');
 		} finally {
-			if ($throw) throw $t;
+			if ($throw)
+				throw $t;
 		}
 		return null;
 	}
@@ -128,7 +99,8 @@ class SysExceptions extends ActiveRecord {
 	 * @throws Throwable
 	 */
 	public static function acknowledgeOne(int $id):void {
-		if (null !== $model = self::findOne($id)) $model->updateAttributes(['known' => true]);
+		if (null !== $model = self::findOne($id))
+			$model->updateAttributes(['known' => true]);
 	}
 
 	/**
