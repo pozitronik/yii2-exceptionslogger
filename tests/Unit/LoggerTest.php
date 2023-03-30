@@ -8,13 +8,11 @@ use pozitronik\sys_exceptions\models\SysExceptions;
 use RuntimeException;
 use Tests\Support\UnitTester;
 use Throwable;
-use Yii;
-use yii\web\Application;
 
 /**
- *
+ * @covers SysExceptions::log()
  */
-class SysExceptionsTest extends Unit {
+class LoggerTest extends Unit {
 
 	protected UnitTester $tester;
 
@@ -27,19 +25,12 @@ class SysExceptionsTest extends Unit {
 
 	/**
 	 * @return void
-	 */
-	public function testSomeFeature():void {
-		$this->tester->assertInstanceOf(Application::class, Yii::$app);
-	}
-
-	/**
-	 * @return void
 	 * @throws Throwable
 	 */
 	public function testLoggerSilently():void {
 		$i = 1;
 		try {
-			$i /= 0;//this error must be on the line 42
+			$i /= 0;
 		} catch (Throwable $t) {
 			SysExceptions::log($t);//just silently log exception
 		}
@@ -50,12 +41,11 @@ class SysExceptionsTest extends Unit {
 		static::assertEquals(0, $exception->code);
 
 		static::assertEquals(__FILE__, $exception->file);//the test file path can be different in different environments
-		static::assertEquals(42, $exception->line);
+		static::assertEquals(33, $exception->line);
 		static::assertEquals('Division by zero', $exception->message);
 		static::assertEquals(json_encode([]), $exception->get);
 		static::assertEquals(json_encode([]), $exception->post);
 		static::assertFalse($exception->known);
-
 	}
 
 	/**
@@ -71,25 +61,32 @@ class SysExceptionsTest extends Unit {
 		static::assertEquals(0, $exception->code);
 
 		static::assertEquals(__FILE__, $exception->file);//the test file path can be different in different environments
-		static::assertEquals(66, $exception->line);
+		static::assertEquals(56, $exception->line);
 		static::assertEquals('Someone tried divide to zero', $exception->message);
 		static::assertEquals(json_encode([]), $exception->get);
 		static::assertEquals(json_encode([]), $exception->post);
 		static::assertTrue($exception->known);
-
 	}
 
 	/**
 	 * @return void
+	 * @throws Throwable
 	 */
-	public function testWrapper():void {
+	public function testLoggerWithTrow():void {
+		$this->expectException(RuntimeException::class);
+		SysExceptions::log(new RuntimeException("Someone tried divide to zero"), true);//silently log own exception and mark it as known error
 
+		/** @var SysExceptions $exception */
+		$exception = SysExceptions::find()->orderBy(['id' => SORT_DESC])->one();
+		static::assertEquals(0, $exception->user_id);
+		static::assertEquals(0, $exception->code);
+
+		static::assertEquals(__FILE__, $exception->file);//the test file path can be different in different environments
+		static::assertEquals(77, $exception->line);
+		static::assertEquals('Someone tried divide to zero', $exception->message);
+		static::assertEquals(json_encode([]), $exception->get);
+		static::assertEquals(json_encode([]), $exception->post);
+		static::assertFalse($exception->known);
 	}
 
-	/**
-	 * @return void
-	 */
-	public function testHandler():void {
-
-	}
 }
