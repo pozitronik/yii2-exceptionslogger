@@ -28,15 +28,20 @@ use yii\console\Exception;
 class UnitTester extends Actor {
 	use _generated\UnitTesterActions;
 
+	private static $_isExecuted = false;
+
 	/**
+	 * @param bool $once If true, migrations will be called just once for each tests execution
 	 * @return void
-	 * @throws InvalidRouteException
 	 * @throws Exception
+	 * @throws InvalidRouteException
 	 */
-	public function migrate():void {
+	public function migrate(bool $once = true):void {
+		if ($once && static::$_isExecuted) return;
 		$migrationController = new MigrateController('migrations', Yii::$app);
 		$migrationController->migrationPath = ['./migrations'];
 		$migrationController->interactive = false;
 		$migrationController->runAction('up');
+		static::$_isExecuted = true;
 	}
 }
