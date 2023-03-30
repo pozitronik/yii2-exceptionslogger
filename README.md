@@ -24,22 +24,28 @@ to the require section of your `composer.json` file.
 Requirements
 ------------
 
-Yii2, PHP >= 7.2.0
+Yii2, PHP >= 8.0
 
-Usage
------
-At first, run a included migration:
+Configuration
+-------------
+
+Run a included migration:
 
 ```
 yii migrate/up --migrationPath=vendor/pozitronik/yii2-exceptionslogger/migrations
 ```
 
-This extension provides an SysExceptions::log() static function, that can accept any Throwable interface as first
-parameter. All exception data will be saved in `sys_exceptions` table (in case of database failure data will be written
-into `runtime/exception.log` file).
+It creates the `sys_exceptions` table, which will store exceptions data.
 
-Example of usage
-----------------
+Usage
+-----
+
+## Direct logger
+
+This extension provides the `SysExceptions::log()` function, that can accept any `Throwable` interface as its first parameter. The exception
+data will be saved in `sys_exceptions` table (in case of failure, the data will be written into `runtime/exception.log` file).
+
+Example:
 
 ```php
 try {
@@ -51,16 +57,23 @@ try {
 }
 ```
 
-Also, LoggedException class provided. Just wrap your current exceptions in it, like:
+## Default exceptions handler
+
+You can use the `pozitronik\sys_exceptions\models\ErrorHandler` class as default application error handler to log all exceptions
+automatically. Define it in your application config, like:
 
 ```php
-    throw new LoggedException(
-        new HttpException('Bad thing')
-    );
+
+$config = [
+    'components' => [
+        'errorHandler' => [
+            'class' => pozitronik\sys_exceptions\models\ErrorHandler::class,
+            'errorAction' => 'site/error'
+        ]
+    ];
 ```
 
-instead of:
+License
+-------
 
-```php
-throw new HttpException('Bad thing');
-```
+GNU GPL v3.0
