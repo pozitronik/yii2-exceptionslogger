@@ -57,16 +57,6 @@ try {
 }
 ```
 
-## Exception Wrapper
-
-Also, the `LoggedException` class is provided with this extension. Just wrap your current exceptions in it, like this:
-
-```php
-    throw new LoggedException(
-        new HttpException('Bad thing')
-    );
-```
-
 ## Default exceptions handler
 
 You can use the `pozitronik\sys_exceptions\models\ErrorHandler` class as default application error handler to log all exceptions
