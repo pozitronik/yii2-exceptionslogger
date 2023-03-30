@@ -1,0 +1,9 @@
+actor: FunctionalTester
+suite_namespace: Tests\Functional
+modules:
+    enabled:
+        - Asserts
+        - Db
+        -   Yii2:
+                configFile: 'tests/_app/config/main.php'
+step_decorators: ~
