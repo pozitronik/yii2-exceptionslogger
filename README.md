@@ -2,6 +2,8 @@ ExceptionsLogger
 ==================
 Exceptions logging extension for YII2
 
+[![Build Status](https://github.com/pozitronik/yii2-exceptionslogger/actions/workflows/ci.yml/badge.svg)](https://github.com/pozitronik/yii2-exceptionslogger/actions)
+
 Installation
 ------------
 
