@@ -36,7 +36,7 @@ class UnitTester extends Actor {
 	 * @throws Exception
 	 * @throws InvalidRouteException
 	 */
-	public function migrate(bool $once = true):void {
+	public function migrate(bool $once = false):void {
 		if ($once && static::$_isExecuted) return;
 		$migrationController = new MigrateController('migrations', Yii::$app);
 		$migrationController->migrationPath = ['./migrations'];
