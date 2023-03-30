@@ -2,10 +2,8 @@
 declare(strict_types = 1);
 
 use app\models\Users;
-use yii\log\FileTarget;
 use yii\caching\DummyCache;
 use yii\web\AssetManager;
-use yii\web\ErrorHandler;
 
 $db = require __DIR__.'/db.php';
 
@@ -28,19 +26,6 @@ $config = [
 		'user' => [
 			'identityClass' => Users::class,
 			'enableAutoLogin' => true,
-		],
-		'errorHandler' => [
-			'class' => ErrorHandler::class,
-			'errorAction' => 'site/error',
-		],
-		'log' => [
-			'traceLevel' => YII_DEBUG?3:0,
-			'targets' => [
-				[
-					'class' => FileTarget::class,
-					'levels' => ['error', 'warning'],
-				],
-			],
 		],
 		'urlManager' => [
 			'enablePrettyUrl' => true,
