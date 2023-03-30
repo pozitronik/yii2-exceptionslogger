@@ -5,6 +5,7 @@ namespace Tests\Unit;
 
 use Codeception\Test\Unit;
 use pozitronik\sys_exceptions\models\SysExceptions;
+use RuntimeException;
 use Tests\Support\UnitTester;
 use Throwable;
 use Yii;
@@ -35,27 +36,46 @@ class SysExceptionsTest extends Unit {
 	 * @return void
 	 * @throws Throwable
 	 */
-	public function testLogger():void {
+	public function testLoggerSilently():void {
 		$i = 1;
 		try {
-			$i /= 0;//this error must be on the line 41
+			$i /= 0;//this error must be on the line 42
 		} catch (Throwable $t) {
 			SysExceptions::log($t);//just silently log exception
-//			SysExceptions::log(new RuntimeException("Someone tried divide to zero"), false, true);//silently log own exception and mark it as known error
-//			SysExceptions::log(new RuntimeException("It prohibited by mathematics"), true);//log own exception and throw it
 		}
 
 		/** @var SysExceptions $exception */
-		$exception = SysExceptions::find()->one();
+		$exception = SysExceptions::find()->orderBy(['id' => SORT_DESC])->one();
 		static::assertEquals(0, $exception->user_id);
 		static::assertEquals(0, $exception->code);
 
-		static::assertStringEndsWith('BaseTest.php', $exception->file);//the test file path can be different in different environments
-		static::assertEquals(41, $exception->line);
+		static::assertEquals(__FILE__, $exception->file);//the test file path can be different in different environments
+		static::assertEquals(42, $exception->line);
 		static::assertEquals('Division by zero', $exception->message);
 		static::assertEquals(json_encode([]), $exception->get);
 		static::assertEquals(json_encode([]), $exception->post);
 		static::assertFalse($exception->known);
+
+	}
+
+	/**
+	 * @return void
+	 * @throws Throwable
+	 */
+	public function testLoggerSilentlyKnown():void {
+		SysExceptions::log(new RuntimeException("Someone tried divide to zero"), false, true);//silently log own exception and mark it as known error
+
+		/** @var SysExceptions $exception */
+		$exception = SysExceptions::find()->orderBy(['id' => SORT_DESC])->one();
+		static::assertEquals(0, $exception->user_id);
+		static::assertEquals(0, $exception->code);
+
+		static::assertEquals(__FILE__, $exception->file);//the test file path can be different in different environments
+		static::assertEquals(66, $exception->line);
+		static::assertEquals('Someone tried divide to zero', $exception->message);
+		static::assertEquals(json_encode([]), $exception->get);
+		static::assertEquals(json_encode([]), $exception->post);
+		static::assertTrue($exception->known);
 
 	}
 
