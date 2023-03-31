@@ -71,7 +71,6 @@ $this->title = 'Системные сбои';
 			'value' => static fn(SysExceptions $model) => "{$model->file}:{$model->line}",
 			'format' => 'raw'
 		],
-		'message',
 		[
 			'class' => ActionColumn::class,
 			'template' => '{view} {acknowledge}',
