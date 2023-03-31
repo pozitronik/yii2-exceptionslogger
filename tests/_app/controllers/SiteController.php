@@ -14,6 +14,8 @@ use yii\web\HttpException;
  */
 class SiteController extends Controller {
 
+	public $enableCsrfValidation = false;
+
 	/**
 	 * @return string
 	 */

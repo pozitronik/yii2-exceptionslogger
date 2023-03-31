@@ -45,10 +45,49 @@ class RequestParamsCest {
 		$I->assertEquals(0, $exception->code);
 
 		$I->assertStringEndsWith('SiteController.php', $exception->file);//the test file path can be different in different environments
-		$I->assertEquals(35, $exception->line);
+		$I->assertEquals(37, $exception->line);
 		$I->assertEquals("I'm a teapot", $exception->message);
 		$I->assertEquals(json_encode([]), $exception->get);
 		$I->assertEquals(json_encode([]), $exception->post);
+		$I->assertFalse($exception->known);
+	}
+
+	/**
+	 * @param FunctionalTester $I
+	 * @return void
+	 * @throws InvalidConfigException
+	 */
+	public function testGetAndPost(FunctionalTester $I):void {
+		$post = [
+			'postParamString' => 'postParamStringValue',
+			'postParamInt' => 174,
+			'postParamBool' => false,
+			'postParamArray' => ['some command', 10, true, 56]
+		];
+		$postAsStrings = [//because POSTs are always strings
+			'postParamString' => 'postParamStringValue',
+			'postParamInt' => '174',
+			'postParamBool' => '',
+			'postParamArray' => ['some command', '10', '1', '56']
+		];
+
+		Yii::$app->set('errorHandler', [
+			'class' => ErrorHandler::class,
+			'errorAction' => 'site/error'
+		]);
+		$I->wantTo('Check that GET and POST params are logged');
+		$I->sendPost('site/fail?getParam=getParamValue', $post);
+
+		/** @var SysExceptions $exception */
+		$exception = SysExceptions::find()->orderBy(['id' => SORT_DESC])->one();
+		$I->assertEquals(0, $exception->user_id);
+		$I->assertEquals(0, $exception->code);
+
+		$I->assertStringEndsWith('SiteController.php', $exception->file);//the test file path can be different in different environments
+		$I->assertEquals(37, $exception->line);
+		$I->assertEquals("I'm a teapot", $exception->message);
+		$I->assertEquals(json_encode(['getParam' => 'getParamValue']), $exception->get);
+		$I->assertEquals(json_encode($postAsStrings), $exception->post);
 		$I->assertFalse($exception->known);
 	}
 }
