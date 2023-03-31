@@ -103,7 +103,7 @@ class SysExceptions extends ActiveRecord {
 		$logger = new self();
 		try {
 			$logger->setAttributes([
-				'user_id' => Yii::$app->request->isConsoleRequest?0:Yii::$app->user->id,
+				'user_id' => Yii::$app->request->isConsoleRequest?0:Yii::$app->user->id,//todo: make unknown user id as null
 				'statusCode' => $t->statusCode??null,
 				'code' => $t->getCode(),
 				'file' => $t->getFile(),
