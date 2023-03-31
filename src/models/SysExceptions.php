@@ -15,7 +15,7 @@ use yii\di\Instance;
  *
  * @property int $id
  * @property string $timestamp
- * @property string $user_id
+ * @property string|null $user_id
  * @property int $code
  * @property int $statusCode
  * @property string $file
@@ -103,7 +103,9 @@ class SysExceptions extends ActiveRecord {
 		$logger = new self();
 		try {
 			$logger->setAttributes([
-				'user_id' => Yii::$app->request->isConsoleRequest?0:Yii::$app->user->id,//todo: make unknown user id as null
+				'user_id' => (Yii::$app->request->isConsoleRequest || null === Yii::$app->user?->id)
+					?null
+					:Yii::$app->user->id,
 				'statusCode' => $t->statusCode??null,
 				'code' => $t->getCode(),
 				'file' => $t->getFile(),
