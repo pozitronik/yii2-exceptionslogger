@@ -110,8 +110,8 @@ class SysExceptions extends ActiveRecord {
 				'line' => $t->getLine(),
 				'message' => $t->getMessage(),
 				'trace' => $t->getTraceAsString(),
-				'get' => json_encode($_GET),
-				'post' => json_encode($_POST),
+				'get' => json_encode(Yii::$app->request->get()),
+				'post' => json_encode(Yii::$app->request->post()),
 				'known' => $known_error
 			]);
 			if ($logger->save()) {
