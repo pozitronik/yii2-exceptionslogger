@@ -15,7 +15,7 @@ use yii\di\Instance;
  *
  * @property int $id
  * @property string $timestamp
- * @property int $user_id
+ * @property string|null $user_id
  * @property int $code
  * @property int $statusCode
  * @property string $file
@@ -63,8 +63,8 @@ class SysExceptions extends ActiveRecord {
 	 */
 	public function rules():array {
 		return [
-			[['timestamp', 'get', 'post'], 'safe'],
-			[['user_id', 'code', 'line', 'statusCode'], 'integer'],
+			[['timestamp', 'get', 'post', 'user_id'], 'safe'],
+			[['code', 'line', 'statusCode'], 'integer'],
 			[['message', 'trace'], 'string'],
 			[['file'], 'string', 'max' => 255],
 			['known', 'boolean']
@@ -103,7 +103,7 @@ class SysExceptions extends ActiveRecord {
 		$logger = new self();
 		try {
 			$logger->setAttributes([
-				'user_id' => Yii::$app->request->isConsoleRequest?0:Yii::$app->user->id,
+				'user_id' => Yii::$app->user?->id?:Yii::$app->user->id,
 				'statusCode' => $t->statusCode??null,
 				'code' => $t->getCode(),
 				'file' => $t->getFile(),
