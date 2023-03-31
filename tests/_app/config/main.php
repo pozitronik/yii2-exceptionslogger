@@ -1,7 +1,7 @@
 <?php /** @noinspection UsingInclusionReturnValueInspection */
 declare(strict_types = 1);
 
-use app\models\Users;
+use app\models\UsersFaker;
 use yii\caching\DummyCache;
 use yii\web\AssetManager;
 
@@ -24,7 +24,7 @@ $config = [
 			'class' => DummyCache::class,
 		],
 		'user' => [
-			'identityClass' => Users::class,
+			'identityClass' => UsersFaker::class,
 			'enableAutoLogin' => true,
 		],
 		'urlManager' => [
