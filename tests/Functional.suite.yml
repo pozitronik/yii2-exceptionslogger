@@ -3,6 +3,10 @@ suite_namespace: Tests\Functional
 modules:
     enabled:
         - Asserts
+        -   REST:
+                depends: Yii2
+                part: json
+                shortDebugResponse: 600 # only the first 300 characters of the response
         - Db
         -   Yii2:
                 configFile: 'tests/_app/config/main.php'
