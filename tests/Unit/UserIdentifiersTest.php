@@ -35,17 +35,4 @@ class UserIdentifiersTest extends Unit {
 		static::assertEquals(null, $exception->user_id);
 	}
 
-	/**
-	 * @return void
-	 */
-	public function testIntegerUserIdentifiers():void {
-
-	}
-
-	/**
-	 * @return void
-	 */
-	public function testUUIDUserIdentifiers():void {
-
-	}
 }
