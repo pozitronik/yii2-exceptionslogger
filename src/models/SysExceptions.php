@@ -7,6 +7,7 @@ use pozitronik\sys_exceptions\SysExceptionsModule;
 use pozitronik\traits\traits\ActiveRecordTrait;
 use Yii;
 use Throwable;
+use yii\base\InvalidConfigException;
 use yii\db\ActiveRecord;
 use yii\db\Connection;
 use yii\di\Instance;
@@ -25,12 +26,21 @@ use yii\di\Instance;
  * @property string $get
  * @property string $post
  * @property bool $known
+ * @property string $custom_data
  */
 class SysExceptions extends ActiveRecord {
 	use ActiveRecordTrait;
 
-	/* Enables logging to Yii::error even when message logged to db, i.e. for all errors */
+	/**
+	 * Enables logging to Yii::error even when message logged to db, i.e. for all errors
+	 * @var bool
+	 */
 	public static bool $yiiErrorLog = false;
+	/**
+	 * custom_data value handler: null - no data, string - string, function - execution result
+	 * @var null|string|callable
+	 */
+	public static mixed $customDataHandler = null;
 
 	/**
 	 * @var Connection|array|string the DB connection object or the application component ID of the DB connection.
@@ -49,6 +59,7 @@ class SysExceptions extends ActiveRecord {
 		parent::init();
 		$this->db = Instance::ensure($this->db, Connection::class);
 		static::$yiiErrorLog = SysExceptionsModule::param('yiiErrorLog', static::$yiiErrorLog);
+		static::$customDataHandler = SysExceptionsModule::param('customDataHandler', static::$customDataHandler);
 	}
 
 	/**
@@ -63,7 +74,7 @@ class SysExceptions extends ActiveRecord {
 	 */
 	public function rules():array {
 		return [
-			[['timestamp', 'get', 'post', 'user_id'], 'safe'],
+			[['timestamp', 'get', 'post', 'user_id', 'custom_data'], 'safe'],
 			[['code', 'line', 'statusCode'], 'integer'],
 			[['message', 'trace'], 'string'],
 			[['file'], 'string', 'max' => 255],
@@ -87,7 +98,8 @@ class SysExceptions extends ActiveRecord {
 			'trace' => 'Trace',
 			'get' => '$_GET',
 			'post' => '$_POST',
-			'known' => 'Известная ошибка'
+			'known' => 'Известная ошибка',
+			'custom_data' => 'Произвольные данные'
 		];
 	}
 
@@ -112,7 +124,8 @@ class SysExceptions extends ActiveRecord {
 				'trace' => $t->getTraceAsString(),
 				'get' => json_encode(Yii::$app->request->get()),
 				'post' => json_encode(Yii::$app->request->post()),
-				'known' => $known_error
+				'known' => $known_error,
+				'custom_data' => static::getCustomData()
 			]);
 			if ($logger->save()) {
 				if (static::$yiiErrorLog) Yii::error($logger->attributes, 'sys.exceptions');
@@ -125,6 +138,18 @@ class SysExceptions extends ActiveRecord {
 			if ($throw) throw $t;
 		}
 		return null;
+	}
+
+	/**
+	 * Returns custom_data filed value, extracted with preconfigured function
+	 * @return null|string
+	 * @throws Throwable
+	 * @throws InvalidConfigException
+	 */
+	private static function getCustomData():?string {
+		return (is_callable(static::$customDataHandler))
+			?call_user_func(static::$customDataHandler)
+			:static::$customDataHandler;
 	}
 
 	/**
