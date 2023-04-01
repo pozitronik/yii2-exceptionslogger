@@ -125,7 +125,7 @@ class SysExceptions extends ActiveRecord {
 				'get' => json_encode(Yii::$app->request->get()),
 				'post' => json_encode(Yii::$app->request->post()),
 				'known' => $known_error,
-				'custom_data' => static::getCustomData()
+				'custom_data' => self::getCustomData()
 			]);
 			if ($logger->save()) {
 				if (static::$yiiErrorLog) Yii::error($logger->attributes, 'sys.exceptions');
