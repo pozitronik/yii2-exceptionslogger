@@ -29,7 +29,7 @@ class RequestParamsCest {
 	 * @param FunctionalTester $I
 	 * @return void
 	 * @throws InvalidConfigException
-	 * @covers \pozitronik\sys_exceptions\models\ErrorHandler
+	 * @covers ErrorHandler
 	 */
 	public function justFail(FunctionalTester $I):void {
 		Yii::$app->set('errorHandler', [
