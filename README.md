@@ -75,6 +75,27 @@ $config = [
     ];
 ```
 
+# How to add custom data to a log record?
+
+It is possible to add custom string data (e.g. some trace identifier) to every logged error. Configure the `customDataHandler` parameter for
+the `SysExceptionsModule` module:
+
+```php
+$config = [
+        'modules' => [
+            'SysExceptionsModule' => [
+                'params' => [
+                    'customDataHandler' => static function():string {
+                        return Yii::$app->request?->csrfToken;//for example
+                    }
+                ]
+            ],
+        ]
+    ]
+```
+
+The data will be stored in the `custom_data` text field.
+
 License
 -------
 
