@@ -73,9 +73,9 @@ jobs:
         env:
           COMPOSER_TOKEN: ${{ secrets.COMPOSER_GITHUB_TOKEN }}
 
-#      - name: phpstan static analysis
-#        uses: php-actions/phpstan@v3
-#        with:
-#            path: src/
-#            configuration: phpstan.neon
-#            memory_limit: 256M
+      - name: phpstan static analysis
+        uses: php-actions/phpstan@v3
+        with:
+            path: src/
+            configuration: phpstan.neon
+            memory_limit: 256M
