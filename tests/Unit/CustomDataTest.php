@@ -31,7 +31,7 @@ class CustomDataTest extends Unit {
 		Yii::$app->setModule('SysExceptionsModule', [
 			'class' => SysExceptionsModule::class,
 			'params' => [
-				'customDataHandler' => fn() => uniqid('uniq', true)
+				'customDataHandler' => fn():string => uniqid('uniq', true)
 			]
 		]);
 		SysExceptions::log(new RuntimeException("First exception with custom data"));
@@ -50,4 +50,26 @@ class CustomDataTest extends Unit {
 
 		static::assertNotEquals($exception1->custom_data, $exception2->custom_data);
 	}
+
+	/**
+	 * @return void
+	 * @throws Throwable
+	 * @throws InvalidConfigException
+	 */
+	public function testCustomDataJson():void {
+		$this->tester->wantToTest("JSON store in custom_data field");
+		Yii::$app->setModule('SysExceptionsModule', [
+			'class' => SysExceptionsModule::class,
+			'params' => [
+				'customDataHandler' => fn():string => json_encode(['a' => uniqid('json', true)])
+			]
+		]);
+		SysExceptions::log(new RuntimeException("Exception with custom JSON data"));
+		/** @var SysExceptions $exception */
+		$exception = SysExceptions::find()->orderBy(['id' => SORT_DESC])->one();
+		static::assertEquals("Exception with custom JSON data", $exception->message);
+		static::assertNotNull($exception->custom_data);
+		static::assertJson($exception->custom_data);
+	}
+
 }
