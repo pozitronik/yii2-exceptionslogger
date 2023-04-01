@@ -41,6 +41,7 @@ $this->title = $model->file;
 					'line',
 					'message',
 					'trace:ntext',
+					'custom_data:ntext',
 					'get',
 					[
 						'attribute' => 'post',

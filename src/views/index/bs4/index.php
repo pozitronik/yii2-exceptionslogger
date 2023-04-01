@@ -58,6 +58,7 @@ $this->title = 'Системные сбои';
 		'post',
 		'message',
 		'trace:ntext',
+		'custom_data:ntext',
 		'known:boolean',
 		[
 			'class' => DataColumn::class,
