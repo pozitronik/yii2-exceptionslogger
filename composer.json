@@ -22,7 +22,7 @@
 		"pozitronik/yii2-helpers" : "^1.0.9",
 		"kartik-v/yii2-grid" : "^3.5.0",
 		"kartik-v/yii2-date-range" : "^1.7.0",
-		"vlucas/phpdotenv" : "5.x.x-dev"
+		"vlucas/phpdotenv" : "^5.0"
 	},
 	"require-dev" : {
 		"yiisoft/yii2" : "dev-master",
